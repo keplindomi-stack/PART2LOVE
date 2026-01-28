@@ -3,90 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>untuk viona tersayang</title>
+    <title>special for viona</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Dancing+Script:wght@700&display=swap');
+        body { margin: 0; background: #fdf6f6; color: #4a4a4a; font-family: 'Quicksand', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         
-        body { 
-            margin: 0; background: #fdf6f6; color: #4a4a4a; 
-            font-family: 'Quicksand', sans-serif; height: 100vh; 
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
-        }
+        /* Start Overlay - Biar Musik Bunyi */
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdf6f6; z-index: 1000; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .start-btn { background: #ffb6c1; color: white; border: none; padding: 15px 30px; border-radius: 25px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(255,182,193,0.5); }
 
-        .container {
-            width: 90%; max-width: 450px; background: #ffffff;
-            border-radius: 30px; padding: 30px;
-            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
-            text-align: center; border: 1px solid #ffe4e1;
-            position: relative;
-        }
-
+        .container { width: 90%; max-width: 450px; background: #ffffff; border-radius: 30px; padding: 30px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3); text-align: center; border: 1px solid #ffe4e1; position: relative; z-index: 10; }
         #score-board { color: #ff8c94; font-size: 1rem; margin-bottom: 15px; font-weight: 600; }
-
-        canvas { background: #fffafb; border-radius: 20px; cursor: crosshair; touch-action: none; }
-
-        #final-content { display: none; position: relative; z-index: 5; }
-
-        .longtext-box {
-            text-align: left; font-size: 0.9rem; line-height: 1.6;
-            max-height: 380px; overflow-y: auto; padding-right: 10px;
-            color: #555; background: rgba(255, 255, 255, 0.6);
-            border-radius: 15px;
-        }
-
+        canvas { background: #fffafb; border-radius: 20px; cursor: crosshair; touch-action: none; width: 100%; max-width: 300px; }
+        
+        #final-content { display: none; }
+        .longtext-box { text-align: left; font-size: 0.9rem; line-height: 1.6; max-height: 350px; overflow-y: auto; padding-right: 10px; color: #555; position: relative; z-index: 20; }
         .longtext-box::-webkit-scrollbar { width: 4px; }
         .longtext-box::-webkit-scrollbar-thumb { background: #ffb6c1; border-radius: 10px; }
-
         h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ff8c94; margin: 10px 0; }
-        
-        .btn-restart {
-            margin-top: 20px; background: #ffb6c1; color: white; border: none;
-            padding: 10px 25px; border-radius: 20px; cursor: pointer;
-            font-weight: 600; transition: 0.3s;
-        }
 
-        .falling-photo {
-            position: absolute; width: 80px; height: 80px;
-            object-fit: cover; border-radius: 50%;
-            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.5);
-            animation: fall linear infinite; z-index: 1; pointer-events: none;
+        /* Polaroid Effect */
+        .polaroid {
+            position: absolute; width: 100px; padding: 8px 8px 25px 8px; background: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); transform: rotate(-5deg);
+            animation: fall linear infinite; pointer-events: none; z-index: 1;
         }
+        .polaroid img { width: 100%; height: 100px; object-fit: cover; }
 
         @keyframes fall {
-            0% { transform: translateY(-120px) rotate(0deg); opacity: 0; }
+            0% { transform: translateY(-150px) rotate(-10deg); opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
-            100% { transform: translateY(600px) rotate(360deg); opacity: 0; }
+            100% { transform: translateY(100vh) rotate(10deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <audio id="background-music" loop>
+    <div id="overlay">
+        <h3 style="color: #ff8c94;">halo viona cantik!</h3>
+        <p style="font-size: 0.8rem; color: #aaa;">pencet tombol di bawah dulu ya</p>
+        <button class="start-btn" onclick="startApp()">buka pesan kelvin</button>
+    </div>
+
+    <audio id="music" loop>
         <source src="https://files.catbox.moe/xyht9k.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container" id="game-container">
-        <div id="score-board">kumpulin 10 hati kelvin ya: 0/10</div>
+        <div id="score-board">kumpulin 10 hati buat buka kejutan: 0/10</div>
         <canvas id="gameCanvas"></canvas>
-        <p style="font-size: 0.75rem; color: #aaa; margin-top: 15px;">geser buat nangkep hati pelan-pelan...</p>
     </div>
 
     <div class="container" id="final-content">
-        <div id="photo-area" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; border-radius:30px;"></div>
-        
         <h2>halo viona sayang! ❤️</h2>
         <div class="longtext-box">
             <p>ah i see, good morning's my love. ♥️ hari ini udah hari kamis ya sayang? bentar lagi weekend tapi aku tau di hari kamis gini biasanya kamu lagi ngerasa capek-capeknya karena aktivitas sekolah dari awal minggu yang lumayan padet. semangat ya cantikku? aku tau tugas-tugas di mts mungkin lagi numpuk atau deadline-nya bikin pusing. tapi tenang okey? i'm here for you, kamu boleh cerita tentang apapun ke aku. sayang dengerin aku sebentar ya. kamu itu kuat, lebih hebat daripada yang kamu bayangin selama ini.</p>
             <p>tiap kali kamu ngelewatin jam-jam di sekolah yang bikin jenuh, tiap kali kamu tahan ngantuk pas dengerin guru, atau pas kamu capek nyicil tugas mts kamu, itu bukti kalau kamu bener-bener pejuang. kamu ga cuma jalanin ini setengah hati, kamu kasih waktu dan tenaga kamu buat semuanya. jadi jangan pernah ngeremehin diri kamu sendiri ya sayang. kalau nanti di sekolah kamu ngerasa capek atau overwhelmed, coba pegang kata-kata ini: kamu ga sendirian. ada aku yang dari jauh tetap ngedukung kamu, ngedoain supaya hari kamis kamu di sekolah lancar terus. aku percaya sama kamu, full. kamu bukan cuma cantik, tapi juga pinter, teliti, dan punya kemampuan yang luar biasa walaupun kadang kamu suka kurang percaya diri. padahal sebenernya kamu jauh lebih hebat daripada yang kamu tunjukin ke dunia.</p>
             <p>don’t be too hard on yourself. take your time, breathe a little, pelan-pelan aja sayang. ga apa kalau kamu butuh istirahat sebentar. kamu manusia, bukan mesin sekolah. kamu boleh ngerasa capek, kamu boleh cerita ke aku kapan pun kamu butuh. aku ga bakal bosen dengerin keluh kesah kamu. oh iya sayang, sebelum berangkat sekolah nanti jangan lupa mandi biar makin seger, terus paling penting sarapan ya cantikku? perutnya jangan kosong biar ada tenaga buat sekolah seharian. jangan lupa juga sholatnya ya, minta doa biar harinya asik terus.</p>
             <p>hari ini mungkin kerasa berat karena udah mau akhir minggu. tapi kamu jauh lebih kuat dari hari kamis itu sendiri. dan aku bangga banget punya kamu. nanti kalau udah pulang sekolah atau pas lagi istirahat, cerita ya ke aku gimana harinya. aku mau jadi tempat kamu pulang tiap kali dunia nuntut banyak hal dari kamu. semangat terus sekolah mts-nya cantikku. kamu pasti bisa. always rooting for you. 🫂❤️</p>
-            <p style="text-align: center; color: #ff8c94; font-weight: 600; margin-top: 20px;">- dari kelvin buat viona -</p>
+            <p style="text-align: center; color: #ff8c94; font-weight: 600;">- dari kelvin buat viona -</p>
         </div>
-        <button class="btn-restart" onclick="location.reload()">main lagi yuk?</button>
     </div>
 
     <script>
+        const audio = document.getElementById('music');
         const photoUrls = [
             "https://files.catbox.moe/5nsbux.jpg",
             "https://files.catbox.moe/cxre70.jpg",
@@ -94,65 +75,65 @@
             "https://files.catbox.moe/1iox26.jpg"
         ];
 
-        function createPhoto() {
-            const area = document.getElementById('photo-area');
-            if (!area || document.getElementById('final-content').style.display === 'none') return;
-            const img = document.createElement('img');
-            img.src = photoUrls[Math.floor(Math.random() * photoUrls.length)];
-            img.className = 'falling-photo';
-            img.style.left = Math.random() * (area.offsetWidth - 80) + 'px';
-            img.style.animationDuration = (4 + Math.random() * 3) + 's';
-            area.appendChild(img);
-            img.addEventListener('animationend', () => img.remove());
+        function startApp() {
+            document.getElementById('overlay').style.display = 'none';
+            audio.play(); audio.pause(); // Trigger audio permission
         }
 
-        const gCanvas = document.getElementById("gameCanvas");
-        const gCtx = gCanvas.getContext("2d");
-        gCanvas.width = 300; gCanvas.height = 300;
-        let score = 0; let active = true;
-        const player = { x: 110, y: 270, w: 80, h: 10, color: "#ffb6c1" };
-        const hearts = [];
+        function spawnPolaroid() {
+            if(document.getElementById('final-content').style.display !== 'block') return;
+            const p = document.createElement('div');
+            p.className = 'polaroid';
+            p.style.left = Math.random() * 80 + '%';
+            p.style.animationDuration = (5 + Math.random() * 5) + 's';
+            p.innerHTML = `<img src="${photoUrls[Math.floor(Math.random()*photoUrls.length)]}">`;
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 8000);
+        }
 
-        function spawnHeart() { if(active && hearts.length < 1) hearts.push({ x: 20 + Math.random()*260, y: -20, s: 2.5 }); }
-        setInterval(spawnHeart, 1000);
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 300; canvas.height = 300;
+        let score = 0; let active = true;
+        const player = { x: 110, y: 270, w: 80, h: 10 };
+        const hearts = [];
 
         function gameLoop() {
             if(!active) return;
-            gCtx.clearRect(0,0,300,300);
-            gCtx.fillStyle = player.color;
-            gCtx.fillRect(player.x, player.y, player.w, player.h);
-            gCtx.fillStyle = "#fff"; gCtx.font = "bold 9px Quicksand"; 
-            gCtx.fillText("KELVIN", player.x + 22, player.y + 8);
-
+            ctx.clearRect(0,0,300,300);
+            ctx.fillStyle = "#ffb6c1";
+            ctx.fillRect(player.x, player.y, player.w, player.h);
+            
+            if(Math.random() < 0.02 && hearts.length < 2) hearts.push({x: Math.random()*280, y: 0, s: 2});
+            
             hearts.forEach((h, i) => {
-                gCtx.font = "24px Arial"; gCtx.fillText("❤️", h.x, h.y); h.y += h.s;
-                if(h.y > player.y && h.y < player.y + 20 && h.x > player.x - 10 && h.x < player.x + player.w) {
-                    hearts.splice(i, 1); score++; 
-                    document.getElementById('score-board').innerHTML = `kumpulin 10 hati kelvin ya: ${score}/10`;
-                    if(score >= 10) { 
-                        active = false; 
+                ctx.font = "20px Arial"; ctx.fillText("❤️", h.x, h.y); h.y += h.s;
+                if(h.y > player.y && h.x > player.x && h.x < player.x + player.w) {
+                    hearts.splice(i, 1); score++;
+                    document.getElementById('score-board').innerHTML = `kumpulin 10 hati buat buka kejutan: ${score}/10`;
+                    if(score >= 10) {
+                        active = false;
                         document.getElementById('game-container').style.display = 'none';
                         document.getElementById('final-content').style.display = 'block';
-                        document.getElementById('background-music').play();
-                        setInterval(createPhoto, 2000);
+                        audio.play(); // Sekarang pasti bunyi karena sudah ada interaksi tombol di awal
+                        setInterval(spawnPolaroid, 1500);
                     }
                 }
-                if(h.y > 300) hearts.splice(i, 1);
             });
             requestAnimationFrame(gameLoop);
         }
 
-        const move = (e) => {
-            let rect = gCanvas.getBoundingClientRect();
-            let x = e.touches ? e.touches[0].clientX : e.clientX;
-            player.x = (x - rect.left) - player.w/2;
-            if(player.x < 0) player.x = 0;
-            if(player.x > 300 - player.w) player.x = 300 - player.w;
-        };
-        window.addEventListener("mousemove", move);
-        gCanvas.addEventListener("touchmove", (e) => { move(e); e.preventDefault(); }, {passive: false});
+        window.addEventListener("mousemove", (e) => {
+            let r = canvas.getBoundingClientRect();
+            player.x = (e.clientX - r.left) - player.w/2;
+        });
+        canvas.addEventListener("touchmove", (e) => {
+            let r = canvas.getBoundingClientRect();
+            player.x = (e.touches[0].clientX - r.left) - player.w/2;
+            e.preventDefault();
+        }, {passive: false});
+
         gameLoop();
     </script>
 </body>
 </html>
-
